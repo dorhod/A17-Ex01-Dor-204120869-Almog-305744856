@@ -78,8 +78,14 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
         private void fetchUserInfo()
         {
             picture_smallPictureBox.LoadAsync(m_LoggedInUser.PictureNormalURL);
-           // m_photoList = m_LoggedInUser.PhotosTaggedIn;
+            // m_photoList = m_LoggedInUser.PhotosTaggedIn;
 
+            fetchPictures();
+
+        }
+
+        private void fetchPictures()
+        {
             PicturesColleciton picture = m_LoggedInUser.Pictures;
 
             foreach (Album album in m_LoggedInUser.Albums)
@@ -97,7 +103,6 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
             }
 
             showPhotos();
-           
 
         }
 
