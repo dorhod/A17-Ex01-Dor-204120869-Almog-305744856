@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace A17_Ex01_Dor_204120869_Almog_305744856
 {
-
+    //Hii Almog I want to upload this to your computer
     public partial class Form1 : Form
     {
         public Form1()
