@@ -22,7 +22,9 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
         }
 
         User m_LoggedInUser;
-        FacebookObjectCollection<Group> m_GroupsList;
+        List<Photo> m_photoList = new List<Photo>();
+        List<String> m_PhotosTagsWith = new List<string>();
+        Photo[] m_25photosList;
 
         private void loginToUser()
         {
@@ -76,22 +78,97 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
         private void fetchUserInfo()
         {
             picture_smallPictureBox.LoadAsync(m_LoggedInUser.PictureNormalURL);
-            m_GroupsList = m_LoggedInUser.Groups;
+           // m_photoList = m_LoggedInUser.PhotosTaggedIn;
 
-            foreach (Group group in m_GroupsList)
+            PicturesColleciton picture = m_LoggedInUser.Pictures;
+
+            foreach (Album album in m_LoggedInUser.Albums)
             {
-                EventsListBox.Items.Add(group);
-               // group.Name;
+                addPhotos(album.Photos);
             }
-            
+
+            addPhotos(m_LoggedInUser.PhotosTaggedIn);
+
+            m_25photosList = new Photo[25];
+
+            for (int i = 0; i < 25; i++)
+            {
+                m_25photosList[i] = m_photoList[i];
+            }
+
+            showPhotos();
+           
+
+        }
+
+        private void showPhotos()
+        {
+            foreach (Photo photo in m_25photosList)
+            {
+                UserImageList.Images.Add(photo.ImageNormal);
+            }
+
+            ImageListView.View = View.LargeIcon;
+            ImageListView.LargeImageList = UserImageList;
+
+            for (int j = 0; j < this.UserImageList.Images.Count; j++)
+            {
+                ListViewItem item = new ListViewItem();
+                item.ImageIndex = j;
+                this.ImageListView.Items.Add(item);
+            }
+        }
+
+        private void addPhotos(FacebookObjectCollection<Photo> photos)
+        {
+            foreach (Photo photo in photos)
+            {
+                m_photoList.Add(photo);
+                FacebookObjectCollection<PhotoTag> photoTags = photo.Tags;
+                if (photo.Tags != null)
+                {
+                    foreach (PhotoTag photoTag in photoTags)
+                    {
+                        if (!m_PhotosTagsWith.Contains(photoTag.User.Name))
+                        {
+                            m_PhotosTagsWith.Add(photoTag.User.Name);
+                            UserTagedWithList.Items.Add(photoTag.User.Name);
+                        }
+                    }
+                }
+            }
         }
 
         private void button_Login_Click(object sender, EventArgs e)
         {
-            loginToUser();
+            if(m_LoggedInUser == null)
+            {
+                loginToUser();
+                button_Login.Text = "Logout";
+            }
+            else
+            {
+                m_LoggedInUser = null;
+                button_Login.Text = "Login";
+            }
         }
 
         private void picture_smallPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
         }
