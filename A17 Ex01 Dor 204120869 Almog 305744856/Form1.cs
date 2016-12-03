@@ -23,8 +23,9 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
 
         User m_LoggedInUser;
         List<Photo> m_photoList = new List<Photo>();
-        List<String> m_PhotosTagsWith = new List<string>();
-        Photo[] m_25photosList;
+        List<User> m_PhotosTagsWith = new List<User>();
+        List<Photo> m_25photosList;
+        List<Photo> m_photosByUser;
 
         private void loginToUser()
         {
@@ -80,11 +81,11 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
             picture_smallPictureBox.LoadAsync(m_LoggedInUser.PictureNormalURL);
             // m_photoList = m_LoggedInUser.PhotosTaggedIn;
 
-            fetchPictures();
+            fetchAlltaggedPictures();
 
         }
 
-        private void fetchPictures()
+        private void fetchAlltaggedPictures()
         {
             PicturesColleciton picture = m_LoggedInUser.Pictures;
 
@@ -95,20 +96,21 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
 
             addPhotos(m_LoggedInUser.PhotosTaggedIn);
 
-            m_25photosList = new Photo[25];
+            m_25photosList = new List<Photo>();
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 1; i < 5; i++)
             {
-                m_25photosList[i] = m_photoList[i];
+                m_25photosList.Add(m_photoList[i]);
+
             }
 
-            showPhotos();
+            showPhotos(m_25photosList);
 
         }
 
-        private void showPhotos()
+        private void showPhotos(List<Photo> photolist)
         {
-            foreach (Photo photo in m_25photosList)
+            foreach (Photo photo in photolist)
             {
                 UserImageList.Images.Add(photo.ImageNormal);
             }
@@ -121,7 +123,7 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
                 ListViewItem item = new ListViewItem();
                 item.ImageIndex = j;
                 this.ImageListView.Items.Add(item);
-            }
+            }  
         }
 
         private void addPhotos(FacebookObjectCollection<Photo> photos)
@@ -134,9 +136,9 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
                 {
                     foreach (PhotoTag photoTag in photoTags)
                     {
-                        if (!m_PhotosTagsWith.Contains(photoTag.User.Name))
+                        if (!m_PhotosTagsWith.Contains(photoTag.User))
                         {
-                            m_PhotosTagsWith.Add(photoTag.User.Name);
+                            m_PhotosTagsWith.Add(photoTag.User);
                             UserTagedWithList.Items.Add(photoTag.User.Name);
                         }
                     }
@@ -176,6 +178,33 @@ namespace A17_Ex01_Dor_204120869_Almog_305744856
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void UserTagedWithList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void SeachPhotos_Click(object sender, EventArgs e)
+        {
+            m_photosByUser = new List<Photo>(); 
+            ImageListView.Clear();
+            UserImageList.Dispose();
+            foreach (Photo photo in m_photoList)
+            {
+                FacebookObjectCollection<PhotoTag> photoTags = photo.Tags;
+                if (photo.Tags != null & !m_photosByUser.Contains(photo))
+                {
+                    foreach (PhotoTag photoTag in photoTags)
+                    {
+                        if (UserTagedWithList.CheckedItems.Contains(photoTag.User.Name))
+                        {
+                            m_photosByUser.Add(photo);
+                        }
+                    }
+                }
+            }
+            showPhotos(m_photosByUser);
         }
     }
 }

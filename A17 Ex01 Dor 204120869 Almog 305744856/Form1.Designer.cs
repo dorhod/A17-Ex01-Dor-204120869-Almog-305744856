@@ -36,6 +36,7 @@
             this.UserTagedWithList = new System.Windows.Forms.CheckedListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.picture_smallPictureBox = new System.Windows.Forms.PictureBox();
+            this.SeachPhotos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -78,6 +79,7 @@
             this.UserTagedWithList.Name = "UserTagedWithList";
             this.UserTagedWithList.Size = new System.Drawing.Size(298, 780);
             this.UserTagedWithList.TabIndex = 3;
+            this.UserTagedWithList.SelectedIndexChanged += new System.EventHandler(this.UserTagedWithList_SelectedIndexChanged);
             // 
             // pictureBox1
             // 
@@ -101,13 +103,24 @@
             this.picture_smallPictureBox.TabStop = false;
             this.picture_smallPictureBox.Click += new System.EventHandler(this.picture_smallPictureBox_Click);
             // 
+            // SeachPhotos
+            // 
+            this.SeachPhotos.Location = new System.Drawing.Point(30, 965);
+            this.SeachPhotos.Name = "SeachPhotos";
+            this.SeachPhotos.Size = new System.Drawing.Size(157, 59);
+            this.SeachPhotos.TabIndex = 6;
+            this.SeachPhotos.Text = "SeachPhotos";
+            this.SeachPhotos.UseVisualStyleBackColor = true;
+            this.SeachPhotos.Click += new System.EventHandler(this.SeachPhotos_Click);
+            // 
             // Form1
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1616, 1020);
+            this.ClientSize = new System.Drawing.Size(1616, 1049);
+            this.Controls.Add(this.SeachPhotos);
             this.Controls.Add(this.UserTagedWithList);
             this.Controls.Add(this.ImageListView);
             this.Controls.Add(this.picture_smallPictureBox);
@@ -134,6 +147,7 @@
         private System.Windows.Forms.ListView ImageListView;
         private System.Windows.Forms.CheckedListBox UserTagedWithList;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button SeachPhotos;
     }
 }
 
